@@ -32,6 +32,8 @@ const homeLayout = async ({ children }: { children: React.ReactNode }) => {
     };
   });
 
+  console.log({ formattedData, data });
+
   return (
     <div className={"flex flex-col min-h-screen"}>
       <Navbar />

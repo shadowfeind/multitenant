@@ -17,14 +17,18 @@ export const useDropdownPosition = (
     if (left + dropdownWidth > window.innerWidth) {
       // aligh to right edge of button instead
       left = rect.right + window.scrollX - dropdownWidth;
+
+      if (left < 0) {
+        left = window.innerWidth - dropdownWidth - 16;
+      }
     }
 
     // if still off-screen , align to the right edge of viewport with some padding
     if (left < 0) {
-      left = window.innerWidth - dropdownWidth - 16;
+      left = 16;
     }
 
-    // ensure dropdown doesn't go off left edge
+    return { top, left };
   };
 
   return { getDropdownPosition };
