@@ -4,6 +4,7 @@ import { SearchFilters } from "@/app/(app)/(home)/search-filters";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { Category } from "@/payload-types";
+import { CustomCategory } from "@/types";
 
 const homeLayout = async ({ children }: { children: React.ReactNode }) => {
   const payload = await getPayload({
@@ -19,9 +20,10 @@ const homeLayout = async ({ children }: { children: React.ReactNode }) => {
         exists: false,
       },
     },
+    sort: "name",
   });
 
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustomCategory[] = data.docs.map((doc) => ({
     ...doc,
     subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
       // because of depth:1 we are confident doc will be a type of Category
@@ -29,8 +31,6 @@ const homeLayout = async ({ children }: { children: React.ReactNode }) => {
       subcategories: undefined,
     })),
   }));
-
-  console.log({ formattedData, data });
 
   return (
     <div className={"flex flex-col min-h-screen"}>
