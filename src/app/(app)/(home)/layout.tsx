@@ -21,16 +21,14 @@ const homeLayout = async ({ children }: { children: React.ReactNode }) => {
     },
   });
 
-  const formattedData = data.docs.map((doc) => {
-    return {
-      ...doc,
-      subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
-        // because of depth:1 we are confident doc will be a type of Category
-        ...(doc as Category),
-        subcategories: undefined,
-      })),
-    };
-  });
+  const formattedData = data.docs.map((doc) => ({
+    ...doc,
+    subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
+      // because of depth:1 we are confident doc will be a type of Category
+      ...(doc as Category),
+      subcategories: undefined,
+    })),
+  }));
 
   console.log({ formattedData, data });
 

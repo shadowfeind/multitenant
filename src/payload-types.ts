@@ -164,7 +164,7 @@ export interface Category {
   name: string;
   slug: string;
   color?: string | null;
-  parent?: (string | Category)[] | null;
+  parent?: (string | null) | Category;
   subcategories?: {
     docs?: (string | Category)[];
     hasNextPage?: boolean;
