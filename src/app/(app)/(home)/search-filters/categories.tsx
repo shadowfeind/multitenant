@@ -6,6 +6,7 @@ import { CustomCategory } from "@/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
+import CategoriesSidebar from "./categories-sidebar";
 
 type Props = {
   data: CustomCategory[];
@@ -18,7 +19,7 @@ export const Categories = ({ data }: Props) => {
 
   const [visibleCount, setVisibleCount] = useState(data.length);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const activeCategory = "all";
   const activeCategoryIndex = data.findIndex(
@@ -60,6 +61,11 @@ export const Categories = ({ data }: Props) => {
   return (
     <div className="relative w-full">
       {/* hidden div to measure all items  */}
+      <CategoriesSidebar
+        open={isSidebarOpen}
+        onOpenChange={() => setIsSidebarOpen(false)}
+        data={data}
+      />
       <div
         className="absolute opacity-0 pointer-events-none flex"
         style={{ position: "fixed", top: -9999, left: -9999 }}
@@ -101,6 +107,7 @@ export const Categories = ({ data }: Props) => {
                 !isAnyHovered &&
                 "bg-white border-primary"
             )}
+            onClick={() => setIsSidebarOpen(true)}
           >
             View All <ListFilterIcon className="ml-2" />
           </Button>
