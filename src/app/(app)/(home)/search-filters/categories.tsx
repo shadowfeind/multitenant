@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import CategoryDropdown from "./category-dropdown";
-import { CustomCategory } from "@/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import CategoriesSidebar from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/server/types";
 
 type Props = {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 };
 
 export const Categories = ({ data }: Props) => {
@@ -64,14 +64,13 @@ export const Categories = ({ data }: Props) => {
       <CategoriesSidebar
         open={isSidebarOpen}
         onOpenChange={() => setIsSidebarOpen(false)}
-        data={data}
       />
       <div
         className="absolute opacity-0 pointer-events-none flex"
         style={{ position: "fixed", top: -9999, left: -9999 }}
         ref={measureRef}
       >
-        {data.map((category: CustomCategory) => (
+        {data.map((category: CategoriesGetManyOutput[1]) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category}
@@ -89,15 +88,17 @@ export const Categories = ({ data }: Props) => {
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
-        {data.slice(0, visibleCount).map((category: CustomCategory) => (
-          <div key={category.id}>
-            <CategoryDropdown
-              category={category}
-              isActive={activeCategory === category.slug}
-              isNavigationHovered={isAnyHovered}
-            />
-          </div>
-        ))}
+        {data
+          .slice(0, visibleCount)
+          .map((category: CategoriesGetManyOutput[1]) => (
+            <div key={category.id}>
+              <CategoryDropdown
+                category={category}
+                isActive={activeCategory === category.slug}
+                isNavigationHovered={isAnyHovered}
+              />
+            </div>
+          ))}
 
         <div ref={viewAllRef} className="shrink-0">
           <Button

@@ -1,10 +1,11 @@
+import { CategoriesGetManyOutput } from "@/modules/categories/server/types";
 import { Category } from "@/payload-types";
-import { CustomCategory } from "@/types";
+
 import Link from "next/link";
 import React from "react";
 
 type Props = {
-  category: CustomCategory;
+  category: CategoriesGetManyOutput[1];
   isOpen: boolean;
   position: {
     top: number;
