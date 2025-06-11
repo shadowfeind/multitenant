@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -28,12 +28,16 @@ const poppins = Poppins({
 });
 
 export const SignInView = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const trpc = useTRPC();
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => toast.error(error.message),
-      onSuccess: () => router.push("/"),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        router.push("/");
+      },
     })
   );
 
