@@ -1,9 +1,9 @@
 "use client";
 
-import { SearchInput } from "@/app/(app)/(home)/search-filters/search-input";
 import { Categories } from "./categories";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { SearchInput } from "./search-input";
 
 export const SearchFilters = () => {
   const trpc = useTRPC();
